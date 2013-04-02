@@ -3,13 +3,10 @@
 mysql_connect('localhost', 'root', '') or die(mysql_error());
 mysql_select_db('wellcheckclinic') or die(mysql_error());
 
-$newUser = $_POST["user"];
-$newPass = $_POST["password"];
+$newUser = $_GET["user"];
+$newPass = $_GET["password"];
 
-echo $newUser;
-echo $newPass;
-
-//$result = mysql_query("SELECT * FROM accounts WHERE username = '$newUser' AND password = '$newPass'");
+$result = mysql_query("SELECT * FROM accounts WHERE username = '$newUser' AND password = '$newPass'");
 
 $type = -1;
 
@@ -28,10 +25,12 @@ while($row = mysql_fetch_array($result))
     {
         header("refresh: 0; http://localhost/360phaseII/login.html");
     }
-    if($type == -1)
-    {
-        echo "Invalid username and/or password.";
-    }
 }
+
+if($type == -1)
+    {
+        echo "Invalid username and/or password. Redirecting to login.";
+        header("refresh: 5; http://localhost/360phaseII/login.html");
+    }
 
 ?> 
