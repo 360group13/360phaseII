@@ -19,7 +19,7 @@ while($row = mysql_fetch_array($result))
     }
     if($type == 1)
     {
-        header("refresh: 0; http://localhost/360phaseII/login.html");
+        header("refresh: 0; http://localhost/360phaseII/nursewelcome.html");
     }
     if($type == 2)
     {
