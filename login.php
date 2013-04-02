@@ -6,7 +6,10 @@ mysql_select_db('wellcheckclinic') or die(mysql_error());
 $newUser = $_POST["user"];
 $newPass = $_POST["password"];
 
-$result = mysql_query("SELECT * FROM accounts WHERE username = '$newUser' AND password = '$newPass'");
+echo $newUser;
+echo $newPass;
+
+//$result = mysql_query("SELECT * FROM accounts WHERE username = '$newUser' AND password = '$newPass'");
 
 $type = -1;
 
