@@ -1,25 +1,27 @@
 <html>
 <body>
 <center>
-<h1> <strong> Welcome <?php echo $_GET["user"]; ?> </strong> </h1>
+<h1> <strong> Welcome <?php echo $_POST["user"]; ?> </strong> </h1>
     
 <form action="nurseview.html" method="post">
 <table border=2>
 <tr>
-      <td colspan="2">Patients
+      <td colspan="2"><center><strong>Patients</strong></center>
 </tr>
-<tr>
-    
-</tr>
-</table>
-</form>    
+<th> 
+PATIENT NAME HERE
+</th>
+<th>
+<form action="nurseview.html" method="post">
+<input type="submit" value="View Info"/>
+</th>
+</table>    
 
 <form action="nursecreate.html" method="post">
-<input type="submit"  value ="create patient account"/>    
-</form>
+<input type="submit"  value ="Create Patient Account"/>    
 
 <form action="logout.php" method="post">
-<input type="submit"  value ="log out"/>
+<input type="submit"  value ="Log Out"/>
 </form>
 
 </center>
