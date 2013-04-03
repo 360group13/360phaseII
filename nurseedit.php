@@ -14,11 +14,10 @@ $newUsername = $_POST["username"];
 $newPassword = $_POST["password"];
 $newUserType = $_POST["userType"];
 $newDoctorId = $_POST["doctorId"];
-$newPermission = $_POST["permission"];
 
-mysql_query("INSERT INTO patient(name, phone, address, city, state, zip, insurance, username, password, userType, doctorId, permission) VALUES('$newName', '$newPhone', '$newAddress', '$newCity', '$newState', '$newZip', '$newInsurance', '$newUsername', '$newPassword', '$newUserType', '$newDoctorId', '$newPermission');");
+mysql_query("UPDATE INTO patient(name, phone, address, city, state, zip, insurance, username, password, userType, doctorId) VALUES('$newName', '$newPhone', '$newAddress', '$newCity', '$newState', '$newZip', '$newInsurance', '$newUsername', '$newPassword', '$newUserType', '$newDoctorId');");
 
-echo 'Account Successfully Created';
+echo 'Account Successfully Updated.';
 header("refresh: 3; http://localhost/360phaseII/nursewelcome.html")
 
 ?>

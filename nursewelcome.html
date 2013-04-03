@@ -2,7 +2,7 @@
 <body>
 <center>
 <h1> <strong> Welcome <?php echo $_POST["user"]; ?> </strong> </h1>
-    
+
 <form action="nurseview.html" method="post">
 <table border=2>
 <tr>
@@ -12,13 +12,15 @@
 PATIENT NAME HERE
 </th>
 <th>
-<form action="nurseview.html" method="post">
+
 <input type="submit" value="View Info"/>
 </th>
-</table>    
+</table>
+</form>
 
 <form action="nursecreate.html" method="post">
 <input type="submit"  value ="Create Patient Account"/>    
+</form>
 
 <form action="logout.php" method="post">
 <input type="submit"  value ="Log Out"/>

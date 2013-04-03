@@ -1,7 +1,7 @@
 <?php
 
-echo "You have successfully been logged out.";
+echo "You have been successfully logged out.";
 
-header("refresh: 5; url=http://localhost/360phaseII/login.html");
+header("refresh: 3; url=http://localhost/360phaseII/login.html");
 
 ?>

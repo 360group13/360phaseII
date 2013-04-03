@@ -3,7 +3,7 @@
 mysql_connect('localhost', 'root', '') or die(mysql_error());
 mysql_select_db('wellcheckclinic') or die(mysql_error());
 
-$newUser = $_POST["user"];
+$newUser = $_POST["username"];
 $newPass = $_POST["password"];
 
 $result = mysql_query("SELECT * FROM accounts WHERE username = '$newUser' AND password = '$newPass'");

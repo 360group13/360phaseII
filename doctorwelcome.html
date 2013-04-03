@@ -1,0 +1,39 @@
+<html>
+<body>
+<center>
+<h1> <strong> Welcome <?php echo $_POST["user"]; ?> </strong> </h1>
+
+<table border=2>
+<tr>
+      <td colspan="4"><strong>Patients</strong>
+</tr>
+<th><form>
+<?php 
+$name = mysql_query("SELECT name FROM personInformation;");
+echo $name;
+?>
+</th></form>
+<th>
+<form action="doctorview.html" method="post">
+<input type="submit" value="View Info"/>
+</form>
+</th>
+<th>
+<form action="doctorcomment.php" method="post">
+<input type="submit" value="Add Comments"/>
+</form>
+</th>
+<th>
+<form action="doctorprescribe.php" method="post">
+<input type="submit" value="Add Prescriptions"/>
+</form>
+</th>
+</table>
+
+<form action="logout.php" method="post">
+<input type="submit"  value ="Log Out"/>
+</form>
+
+</center>
+</body>
+</html>
