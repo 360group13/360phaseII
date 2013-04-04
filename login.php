@@ -6,31 +6,51 @@ mysql_select_db('wellcheckclinic') or die(mysql_error());
 $newUser = $_POST["username"];
 $newPass = $_POST["password"];
 
-$result = mysql_query("SELECT * FROM accounts WHERE username = '$newUser' AND password = '$newPass'");
+$result1 = mysql_query("SELECT userType FROM patient WHERE username = '$newUser' AND password = '$newPass';");
+$result2 = mysql_query("SELECT userType FROM nurse WHERE username = '$newUser' AND password = '$newPass';");
+$result3 = mysql_query("SELECT userType FROM doctor WHERE username = '$newUser' AND password = '$newPass';");
 
-$type = -1;
+if (!$result1) { // add this check.
+    die('Invalid query: ' . mysql_error());
+}
+if (!$result2) { // add this check.
+    die('Invalid query: ' . mysql_error());
+}
+if (!$result3) { // add this check.
+    die('Invalid query: ' . mysql_error());
+}
 
-while($row = mysql_fetch_array($result))
+$type = 'invalid';
+
+while($row = mysql_fetch_array($result1))
 {
     $type = $row['userType'];
-    if($type == 0)
+    if($type == 'patient')
     { 
         header("refresh: 0; http://localhost/360phaseII/patientwelcome.html");
     }
-    if($type == 1)
+}
+while($row = mysql_fetch_array($result2))
+{
+    $type = $row['userType'];
+    if($type == 'nurse')
     {
         header("refresh: 0; http://localhost/360phaseII/nursewelcome.html");
     }
-    if($type == 2)
+}
+while($row = mysql_fetch_array($result3))
+{
+    $type = $row['userType'];
+    if($type == 'doctor')
     {
-        header("refresh: 0; http://localhost/360phaseII/login.html");
+        header("refresh: 0; http://localhost/360phaseII/doctorwelcome.html");
     }
 }
 
-if($type == -1)
+if($type == 'invalid')
     {
         echo "Invalid username and/or password. Redirecting to login.";
-        header("refresh: 5; http://localhost/360phaseII/login.html");
+        header("refresh: 3; http://localhost/360phaseII/login.html");
     }
 
 ?> 

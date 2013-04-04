@@ -14,10 +14,19 @@ $newUsername = $_POST["username"];
 $newPassword = $_POST["password"];
 $newUserType = $_POST["userType"];
 $newDoctorId = $_POST["doctorId"];
-$newPermission = $_POST["permission"];
 
-mysql_query("INSERT INTO patient(name, phone, address, city, state, zip, insurance, username, password, userType, doctorId, permission) VALUES('$newName', '$newPhone', '$newAddress', '$newCity', '$newState', '$newZip', '$newInsurance', '$newUsername', '$newPassword', '$newUserType', '$newDoctorId', '$newPermission');");
-
+if($newUserType = 'patient')
+{
+    mysql_query("INSERT INTO patient(name, phone, address, city, state, zip, insurance, username, password, userType, doctorId, permission) VALUES('$newName', '$newPhone', '$newAddress', '$newCity', '$newState', '$newZip', '$newInsurance', '$newUsername', '$newPassword', '$newUserType', '$newDoctorId', 'no');");
+}
+if($newUserType = 'nurse')
+{
+    mysql_query("INSERT INTO nurse(name, username, password, userType) VALUES('$newName', '$newUsername', '$newPassword', '$newUserType');");
+}
+if($newUserType = 'doctor')
+{
+    mysql_query("INSERT INTO doctor(name, doctorId, username, password) VALUES('$newName', '$newDoctorId', $newUsername', '$newPassword', '$newUserType');");
+}
 echo 'Account Successfully Created';
 header("refresh: 3; http://localhost/360phaseII/nursewelcome.html")
 
