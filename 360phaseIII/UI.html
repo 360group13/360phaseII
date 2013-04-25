@@ -1,0 +1,54 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Well Check Clinic</title>  
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>   
+        
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    </head>
+    
+    <body>
+        <div class="container">  
+      
+            <div class="page-header">  
+                <h1>The Bulls</h1>   
+            </div>
+            <div class="container">
+                
+                    <div class="offset4 span5">
+                        <h2><center>Log In</center></h2>
+                        <form id="loginForm" method="POST" action="php/index.php" class="form-horizontal">  
+
+                            <div class="control-group">
+                                <label class="control-label" for="username">Username</label>  
+                                <div class="controls">  
+                                    <input type="text" name="username" id="username" placeholder="Your username">  
+                                </div>                     
+                            </div>  
+
+                            <div class="control-group">  
+                                <label class="control-label" for="input1">Password</label>  
+                                <div class="controls">  
+                                    <input type="password" name="password" id="input1" placeholder="Your password">  
+                                </div>  
+                            </div> 
+
+                            <div id="ack"></div>
+
+                            <div class="form-actions">  
+                                <input type="hidden" name="submit" value="submit">  
+                                <button type="submit" class="btn btn-primary">Submit</button>  
+                            </div>
+                        </form>
+                    </div>
+                 
+            </div>
+        </div> 
+        <script type ="text/javascript" src="myLogin.js"></script>
+    </body>
+</html>

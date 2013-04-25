@@ -1,0 +1,8 @@
+Theme:
+http://jqueryui.com/themeroller/
+
+Guideline:
+http://buildinternet.com/2009/12/creating-your-first-php-application-part-1/
+
+Bootstrap:
+http://www.9lessons.info/2012/04/bootstrap-registration-form-tutorial.html
