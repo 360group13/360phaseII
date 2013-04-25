@@ -1,8 +1,8 @@
 <?php
-    require_once '/360phaseII/360phaseIII/php/includes/global.inc.php';
+    //require_once '/360phaseII/360phaseIII/php/includes/global.inc.php';
     
     if(!isset($_SESSION['logged_in'])) { 
-        echo "session is not set...";
+        //echo "session is not set...";
         //header("refresh:0; /360phaseII/360phaseIII/UI.html"); 
     }
 ?>
@@ -74,7 +74,7 @@
                     <p>orange orange orange orange orange</p>
                 </div>
                 <div class="row offset10">
-                    <a href="/360phaseII/360phaseIII/php/index.php?action=logout" class="btn btn-primary">Logout</a>
+                    <a href="/360phaseII/360phaseIII/php/logout.php" class="btn btn-primary">Logout</a>
                 </div>
             </div>
         </div>

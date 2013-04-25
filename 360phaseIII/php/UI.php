@@ -1,5 +1,5 @@
 <?php
-    
+    //require_once '/360phaseII/360phaseIII/php/includes/global.inc.php';
 ?>
 <html>
     <head>
@@ -18,7 +18,7 @@
             </div>
             <div class="row offset3 span6">     
                 <div class="offset2"><h2>Log In</h2></div>
-                <form id="loginForm" action="php/login.php" method="POST" class="form-horizontal">  
+                <form id="loginForm" action="login.php" method="POST" class="form-horizontal">  
                         <div class="control-group">
                             <label class="control-label" for="username">Username</label>  
                             <div class="controls">  
