@@ -9,34 +9,26 @@ class Archive{
         private $weight;
         private $bloodPressure;
         private $sugarLevel;
-        private $patient;
+        private $patientid;
         private $employee;
         private $prescription;
         private $observation;
         private $archiveID;
         private $date;
         
-        function __construct($weight, $bloodPressure, $sugarLevel, $patient, $employee, $prescription, $observation, $archiveID, $date)
+        function __construct($patientid)
         {
-            $this->weight = $weight;
-            $this->bloodPressure = $bloodPressure;
-            $this->sugarLevel = $sugarLevel;
-            $this->patient = $patient;
-            $this->employee = $employee;
-            $this->prescription = $prescription;
-            $this->observation = $observation;
-            $this->archiveID = $archiveID;
-            $this->date = $date;
+            $this->patientid = $patientid;
         }
         
         public function store()
         {
-            $this->date = date("m-d-Y");
+            
         }
         
-        public function addPrescription($patientID, $prescription)
+        public function addPrescription($prescription)
         {
-            // todo
+            $this->prescription = $prescription;
         }
         
         public function getMetrics($patientID)

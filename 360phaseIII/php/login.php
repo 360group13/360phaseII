@@ -22,22 +22,7 @@
     }
     else
     {
-        echo '
-            <head>
-                <title>login</title>  
-                <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>   
-
-                <link href="css/bootstrap.min.css" rel="stylesheet">
-                <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-            </head>
-            <body>
-                <div class="container">
-                    <div class="page-header">  
-                        <h1>Invalid username and password entered. Please try again.<br></br></h1>
-                        <h3><a href = /360phaseII\360phaseIII/php/UI.php>Try Again</a></h3>
-                    </div>
-                </div> 
-            </body>
-            '; 
+        header("refresh: 1; UI.php");
+        echo 'Invalid username and password entered. Please try again.'; 
     }
 ?>

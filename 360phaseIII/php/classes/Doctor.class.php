@@ -25,12 +25,12 @@ class Doctor extends Employee
     
     public function setComments($observations)
     {
-        $patient->setComments($observations);
+        $this->patient->setComments($observations);
     }
     
     public function setPrescription($prescription)
     {
-        $patient->setPrescription($prescription);
+        $this->patient->setPrescription($prescription);
     }
     
     public function addPatients($patient)
@@ -40,7 +40,7 @@ class Doctor extends Employee
     
     public function getPatient()
     {
-        return $patient;
+        return $this->patient;
     }
 }
 
