@@ -36,6 +36,8 @@
                         <div class="form-actions">
                             <input type="hidden" name="submit" value="submit">  
                             <button type="submit" name='submit-login' class="btn btn-primary">Submit</button>
+                            <input type="hidden" name="forgotpassword" value="forgotpassword">  
+                            <button type="submit" name='forgotpassword' class="btn btn-primary">Forgot Password?</button>
                         </div>
                 </form>       
             </div>
