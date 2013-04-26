@@ -4,19 +4,18 @@ class dbconnect{
     
     public function connect()
     {
-        $con = mysql_connect("localhost", "root", "");
+        $this->con = mysql_connect("localhost", "root", "");
     
-        if(!$con)
+        if(!$this->con)
         {
             die('Could not connect: '.mysql_error());
         }
-
-        mysql_select_db("wellcheckclinic", $con);
+        mysql_select_db("wellcheckclinic", $this->con);
     }
     
     public function dbclose()
     {
-        mysql_close($con);
+        mysql_close($this->con);
     }
 }
 ?>

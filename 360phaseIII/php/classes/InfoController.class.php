@@ -1,12 +1,14 @@
 <?php
 
-include('dbconnect.class.php');
+include_once('dbconnect.class.php');
 
 $con = new dbconnect();
 $con->connect();
 
 class InfoController
 {
+    private $user;
+    
     function __construct() {  
         
     }
@@ -19,23 +21,26 @@ class InfoController
         }
         else{
             // $_SESSION["user"] = serialize(new User(mysql_fetch_assoc($result)));  
-            $_SESSION["logged_in"] = 1;
+            $_SESSION['logged_in'] = 1;
+            $_SESSION['user'] = serialize($this->getUser($username));
             return true;
         }
     }
     
     public function logout(){
-        //unset($_SESSION['user']);  
-        //unset($_SESSION['login_time']);  
+        unset($_SESSION['user']);
         unset($_SESSION['logged_in']);  
         session_destroy();  
     }
     
     // returns the type of the user
     public function getUsertype($username){
-        $result = mysql_query("SELECT user_type FROM users WHERE username = '$username';");
-        $usertype = mysql_fetch_array($result);
-        return $usertype['user_type'];
+        $this->user = new User($username);
+        return $this->user->userType;
+    }
+    public function getUser($username){
+        $this->user = new User($username);
+        return $this->user;
     }
 }
 
