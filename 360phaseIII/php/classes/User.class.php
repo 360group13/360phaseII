@@ -46,6 +46,6 @@ class User
     {
         $info = array("firstName" => $this->firstName, "lastName" => $this->lastName, "gender" => $this->gender, "dateOB" => $this->dateOB, 
                     "address" => $this->address, "city" => $this->city, "state" => $this->state, "zip" => $this->zip, "phone" => $this->phone);     
-    }
+    }   
 }
 ?>  
