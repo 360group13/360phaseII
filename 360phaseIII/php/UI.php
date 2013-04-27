@@ -4,15 +4,13 @@
 <html>
     <head>
         <title>Well Check Clinic</title>  
-        <!-- Jquery 1.8.2-->
-	<script src="/360phaseII/360phaseIII/js/jquery-1.8.2.js"></script>
-	<!-- Jquery UI 1.9.1 -->
+        <!-- Jquery UI 1.9.1 -->
 	<script src="/360phaseII/360phaseIII/js/jquery-ui-1.9.1.js"></script>
 	<link  href="/360phaseII/360phaseIII/css/jquery-ui.css" rel="stylesheet" type="text/css" />
 	<link  href="/360phaseII/360phaseIII/css/jquery.ui.theme.css" rel="stylesheet" type="text/css" />
 	<!-- Bootstrap Stuff -->
-	<link  href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-	<link  href="css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />
+	<link  href="/360phaseII/360phaseIII/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link  href="/360phaseII/360phaseIII/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />
 	<script src = "/360phaseII/360phaseIII/js/bootstrap.js"/></script>
 	<!-- Default css look-->
 	<link rel="stylesheet" href="/360phaseII/360phaseIII/css/default.css" />	

@@ -7,7 +7,9 @@
     if(isset($_SESSION['logged_in']))
     {
         $user = unserialize($_SESSION['user']);
-        
+        $username = $user->username;
+        $info = $user->getInfo();
+        $firstName = $info['firstName'];
     }
     
     $info = new InfoController();
@@ -18,55 +20,51 @@
     }
     else
     {
-         if($info->getUsertype($user->username) == 'Doctor')
-             $type = "Doctor";
-         if($info->getUsertype($user->username) == 'Nurse')
-             $type = "Nurse";
-         if($info->getUsertype($user->username) == 'Patient')
-             $type = "Patient";
+        $type = $info->getUsertype($username);
     }
 ?>
 <!DOCTYPE HTML>
-<head>
-	<!-- Jquery 1.8.2-->
-	<script src="/360phaseII/360phaseIII/js/jquery-1.8.2.js"></script>
-	<!-- Jquery UI 1.9.1 -->
-	<script src="/360phaseII/360phaseIII/js/jquery-ui-1.9.1.js"></script>
-	<link  href="/360phaseII/360phaseIII/css/jquery-ui.css" rel="stylesheet" type="text/css" />
-	<link  href="/360phaseII/360phaseIII/css/jquery.ui.theme.css" rel="stylesheet" type="text/css" />
-	<!-- Bootstrap Stuff -->
-	<link  href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-	<link  href="css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />
-	<script src = "/360phaseII/360phaseIII/js/bootstrap.js"/></script>
-	<!-- Default css look-->
-	<link rel="stylesheet" href="/360phaseII/360phaseIII/css/default.css" />	
-	<!-- table maker -->
-	<script src = "/360phaseII/360phaseIII/js/TableMaker.js"/></script>
-	<!-- UI function file -->
-	<script src = "/360phaseII/360phaseIII/js/ui.js"/></script>
-	<!-- DB functions -->
-	<script src = "/360phaseII/360phaseIII/js/dbfunctions.js"/></script>
+<head>    
+    <!-- Jquery 2.0.0 -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+    <link  href="/360phaseII/360phaseIII/css/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link  href="/360phaseII/360phaseIII/css/jquery.ui.theme.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Bootstrap Stuff -->
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <script src = "/360phaseII/360phaseIII/js/bootstrap.js"/></script>
 
-	<script>
-            var username = "<?= $_SESSION['username'] ?>";
-            var type = "<?= $type ?>";
-            $(document).ready(function() {
+    <!-- Default css look-->
+    <link rel="stylesheet" href="/360phaseII/360phaseIII/css/default.css" />	
+    <!-- table maker -->
+    <script src = "/360phaseII/360phaseIII/js/TableMaker.js"/></script>
+    <!-- UI function file -->
+    <script src = "/360phaseII/360phaseIII/js/ui.js"/></script>
+    <!-- DB functions -->
+    <script src = "/360phaseII/360phaseIII/js/dbfunctions.js"/></script>
 
-           $("#login").parent().prepend("Hello, " + type + ": " + username + "   ");
+    <script>
+        var username = "<?= $firstName ?>";
+        var type = "<?= $type ?>";
+        $(document).ready(function() {
 
-            if (type === "Guest" || type === "Customer"){
-                    $("#addBook").hide();
-                    $(".removeBook").hide();
-                    $("#customerTab").hide();
-                    $("#removeLegend").hide();
-            }
+       $("#logout").parent().prepend("Hello, " + type + " " + username + "   ");
 
-            if (type === "Admin" || type == "Customer"){
-                    $("#login").hide();	
-            }
+        if (type === 'Doctor' || type === 'Customer'){
+                $("#addBook").hide();
+                $(".removeBook").hide();
+                $("#customerTab").hide();
+                $("#removeLegend").hide();
+        }
 
-            });
-	</script>
+        if (type === 'Admin' || type === 'Customer'){
+                $("#login").hide();	
+        }
+
+        });
+    </script>
 </head>
 <body onload="ViewAllBooks()">
 <div class = "containerBackground">
@@ -74,10 +72,10 @@
 		<div class="row">
 			<div class="span12">
 				<div class = "page-header">
-				<h1>Library Management System</h1>
+				<h1>Well Check Clinic</h1>
 				</div>
 				<div style = "float: right;">
-					<button type="button" class = "btn btm-inverse" id = "logout" onclick="window.location.href='/php/logout.php'">Logout</button>
+					<button type="button" class = "btn btm-inverse" id = "logout" onclick="window.location.href='logout.php'">Logout</button>
 				</div>
 				<div class="tabbable">
 					<!-- Das Tabs -->

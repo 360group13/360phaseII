@@ -42,9 +42,10 @@ class User {
         $this->phone = (isset($user['phone'])) ? $user['phone'] : "";
     }   
     
-    function getFirstName()
+    function getInfo()
     {
-        return $this->firstName;
+        $info = array ('firstName' => $this->firstName);
+        return $info;
     }
 }
 ?>  

@@ -13,14 +13,15 @@
         //echo 'Login success. Redirecting...';
         // put code to check user type and send to appropriate page
         
-        $usertype = $info->getUsertype($newUser);
+        /*$usertype = $info->getUsertype($newUser);
         if($usertype == "Doctor"){
             header("refresh: 0; showDoctor.php");            
         }
         else if($usertype == 'Nurse')
             header("refresh: 0; showNurse.php");
         else if($usertype == 'Patient')
-            header("refresh: 0; showPatient.php");
+            header("refresh: 0; showPatient.php");*/
+        header("refresh: 0; showUser.php");
     }
     else
     {
