@@ -1,0 +1,34 @@
+/*!
+ * Our CSS file.
+ */
+
+/*
+* for table scroll
+*/ 
+.tableContainer{
+	 padding : 4px;
+	 height : 400px; 
+	 overflow-y : scroll;
+	 text-overflow: ellipsis;
+}
+/*
+* for container background
+*/ 
+.containerBackground{
+	 background: white;
+}
+.container{
+	background: white;
+	height: 100%;
+}
+.customerTableElement{
+	cursor: pointer;
+	-ms-text-overflow: ellipsis;
+}
+.bookTableElement{
+	cursor: pointer;
+	-ms-text-overflow: ellipsis;
+}
+/*
+* for page background
+*/
