@@ -15,8 +15,8 @@ class InfoController
     
     public function login($username, $password){
         $result1 = mysql_query("SELECT * FROM users WHERE username = '$username' AND password = '$password';");
-        
         if (mysql_num_rows($result1) != 1) { // add this check.
+            echo 'infoController.php';
             return false;
         }
         else{
