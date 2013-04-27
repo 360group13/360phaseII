@@ -1,6 +1,6 @@
 <?php
 
-    //include '/classes/InfoController.class.php';
+    include_once 'classes/InfoController.class.php';
     require_once 'includes/global.inc.php';
 
     $newUser = $_POST["username"];
@@ -10,6 +10,7 @@
 
     if($info->login($newUser, $newPass))
     {
+        //echo 'Login success. Redirecting...';
         // put code to check user type and send to appropriate page
         $usertype = $info->getUsertype($newUser);
         if($usertype == "Doctor"){
@@ -22,7 +23,6 @@
     }
     else
     {
-        header("refresh: 1; UI.php");
-        echo 'Invalid username and password entered. Please try again.'; 
+        echo 'Invalid username and/or password entered. Please try again.'; 
     }
 ?>

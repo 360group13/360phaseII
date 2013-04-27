@@ -23,12 +23,12 @@ class Doctor extends Employee
         $patient->setMetrics($weight, $bp, $sugar);
     }
     
-    public function setComments($observations)
+    public function setComments($patientID, $observations)
     {
         $this->patient->setComments($observations);
     }
     
-    public function setPrescription($prescription)
+    public function setPrescription($patientID, $prescription)
     {
         $this->patient->setPrescription($prescription);
     }
@@ -38,9 +38,9 @@ class Doctor extends Employee
         $this->patient = $patient;
     }
     
-    public function getPatient()
+    public function getPatients()
     {
-        return $this->patient;
+        return $this->patients;
     }
 }
 

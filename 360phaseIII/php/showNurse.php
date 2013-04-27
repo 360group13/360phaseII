@@ -4,11 +4,14 @@ require_once 'classes/User.class.php';
     require_once 'classes/dbconnect.class.php';
     require_once 'includes/global.inc.php';
     
-    $user = unserialize($_SESSION['user']);
+    if(isset($_SESSION['logged_in']))
+        $user = unserialize($_SESSION['user']);
+    
     $info = new InfoController();
     
     if(!isset($_SESSION['logged_in']) || ($info->getUsertype($user->username) != 'Nurse')) { 
         echo "Please login. You will be redirected to the login page now...";
+        $info->logout();
         header("refresh:2; UI.php"); 
     }
     else
