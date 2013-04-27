@@ -6,8 +6,8 @@ include_once('dbconnect.class.php');
 $con = new dbconnect();
 $con->connect();
   
-  
-class User {
+class User 
+{
     protected $password;
     protected $firstName;
     protected $lastName;
@@ -24,7 +24,8 @@ class User {
   
     //Constructor is called whenever a new object is created.  
     //Takes an associative array with the DB row as an argument.  
-    function __construct($username) {
+    function __construct($username) 
+    {
         $result = mysql_query("SELECT * FROM users WHERE username = '$username';");
         $user = mysql_fetch_array($result);
         
@@ -40,6 +41,11 @@ class User {
         $this->state = (isset($user['state'])) ? $user['state'] : "";
         $this->zip = (isset($user['zip'])) ? $user['zip'] : "";
         $this->phone = (isset($user['phone'])) ? $user['phone'] : "";
-    }    
+    } 
+    function getInfo()
+    {
+        $info = array("firstName" => $this->firstName, "lastName" => $this->lastName, "gender" => $this->gender, "dateOB" => $this->dateOB, 
+                    "address" => $this->address, "city" => $this->city, "state" => $this->state, "zip" => $this->zip, "phone" => $this->phone);     
+    }
 }
 ?>  
