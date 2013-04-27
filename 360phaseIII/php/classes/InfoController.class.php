@@ -42,6 +42,11 @@ class InfoController
         $this->user = new User($username);
         return $this->user;
     }
+    
+     public function getFirstName($username){
+        $this->user = new User($username);
+        return $this->getFirstName($username);
+    }
 }
 
 ?>

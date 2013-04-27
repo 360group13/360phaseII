@@ -40,6 +40,11 @@ class User {
         $this->state = (isset($user['state'])) ? $user['state'] : "";
         $this->zip = (isset($user['zip'])) ? $user['zip'] : "";
         $this->phone = (isset($user['phone'])) ? $user['phone'] : "";
-    }    
+    }   
+    
+    function getFirstName()
+    {
+        return $this->firstName;
+    }
 }
 ?>  
