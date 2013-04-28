@@ -4,23 +4,23 @@
     require_once 'classes/dbconnect.class.php';
     require_once 'includes/global.inc.php';
     
+    $infoController = new InfoController();
+    
     if(isset($_SESSION['logged_in']))
     {
         $user = unserialize($_SESSION['user']);
         $username = $user->username;
-        $info = $user->getInfo();
-        $firstName = $info['firstName'];
+        $info = $infoController->getInfo($username);
+        $firstName = $info["firstName"];
     }
     
-    $info = new InfoController();
-    
     if(!isset($_SESSION['logged_in'])) {
-        $info->logout();
+        $infoController->logout();
         header("refresh:0; UI.php");
     }
     else
     {
-        $type = $info->getUsertype($username);
+        $type = $user->userType;
     }
 ?>
 <!DOCTYPE HTML>
@@ -46,25 +46,30 @@
     <script src = "/360phaseII/360phaseIII/js/dbfunctions.js"/></script>
 
     <script>
-        var username = "<?= $firstName ?>";
-        var type = "<?= $type ?>";
-        $(document).ready(function() {
+	var username = "<?= $firstName ?>";
+	var type = "<?= $type ?>";
+	$(document).ready(function() {
 
-       $("#logout").parent().prepend("Hello, " + type + " " + username + "   ");
+	if (type === "Guest"){
+		$("#login").parent().prepend("Hello, " + type);
+		$("#logout").hide();
+	}
+	else
+		$("#logout").parent().prepend("Hello, " + type + " " + username + "   ");
+	
+	if (type === "Guest" || type === "Customer"){
+		$("#addBook").hide();
+		$(".removeBook").hide();
+		$("#customerTab").hide();
+		$("#removeLegend").hide();
+	}
 
-        if (type === 'Doctor' || type === 'Customer'){
-                $("#addBook").hide();
-                $(".removeBook").hide();
-                $("#customerTab").hide();
-                $("#removeLegend").hide();
-        }
+	if (type === "Admin" || type === "Customer"){
+		$("#login").hide();	
+	}
 
-        if (type === 'Admin' || type === 'Customer'){
-                $("#login").hide();	
-        }
-
-        });
-    </script>
+	});
+	</script>
 </head>
 <body onload="ViewAllBooks()">
 <div class = "containerBackground">
@@ -72,7 +77,7 @@
 		<div class="row">
 			<div class="span12">
 				<div class = "page-header">
-				<h1>Well Check Clinic</h1>
+				<h1>Library Management System</h1>
 				</div>
 				<div style = "float: right;">
 					<button type="button" class = "btn btm-inverse" id = "logout" onclick="window.location.href='logout.php'">Logout</button>
