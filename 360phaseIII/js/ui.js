@@ -123,7 +123,7 @@ $(function() {
 	}
 	
 	//Form to create a job
-	$('#bookForm').dialog({
+	$('#patientForm').dialog({
 		autoOpen: false,
 		height: 650,
 		width: 500,
@@ -131,13 +131,13 @@ $(function() {
 		draggable: true,
 		resizeable: false,
 		buttons:	{
-			"Add book": function() {
+			"Add Patient": function() {
 				var bValid = true;
 				allFields.removeClass( "ui-state-error" );
 				// bValid = bValid && checkLength( $("ISBN").val(), "ISBN", 1, 15 );
 				// bValid = bValid && checkRegexp( Event.val(), /^[a-z]([0-9a-z_\s])+$/i, "Event name may consist of a-z, 0-9, underscores, begin with a letter." );		
 				// Steptoe: Testing sqlstuff
-				creation = "book_name="+bookName.val()+"&author="+author.val()+"&published="+bookPublication.val()+"&book_details="+bookDetails.val()+"&isbn="+ISBN.val();
+				creation = "firstName="+firstName.val()+"&author="+author.val()+"&published="+bookPublication.val()+"&book_details="+bookDetails.val()+"&isbn="+ISBN.val();
 				AddBook(creation);
 				if ( bValid ) {
 				$( this ).dialog( "close" );
@@ -152,31 +152,23 @@ $(function() {
 				}
 	});
 	
-	var customerName = $( "#customerName" ),
-	details = $( "#customerDetails"),
-	allFieldsCustomer = $( [] ).add( customerName ).add( details );
-	tips = $( ".validateTips" );
-
-	$('#customerForm').dialog({
+	$('#metricsForm').dialog({
 		autoOpen: false,
-		height: 230,
+		height: 650,
 		width: 500,
 		modal: true,
 		draggable: true,
 		resizeable: false,
 		buttons:	{
-			"ADD CUSTOMER": function() {
+			"Add Metrics": function() {
 				var bValid = true;
-				allFieldsCustomer.removeClass( "ui-state-error" );
-				// bValid = bValid && checkLength( $("#customerName").val(), "Customer Name", 1, 20 );
-				// bValid = bValid && checkLength( $("#customerDetails").val(), "Details", 0, 200 );
-				
-				// bValid = bValid && checkRegexp( Event.val(), /^[a-z]([0-9a-z_\s])+$/i, "Event name may consist of a-z, 0-9, underscores, begin with a letter." );
-				// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-
+				allFields.removeClass( "ui-state-error" );
+				// bValid = bValid && checkLength( $("ISBN").val(), "ISBN", 1, 15 );
+				// bValid = bValid && checkRegexp( Event.val(), /^[a-z]([0-9a-z_\s])+$/i, "Event name may consist of a-z, 0-9, underscores, begin with a letter." );		
+				// Steptoe: Testing sqlstuff
+				creation = "firstName="+firstName.val()+"&author="+author.val()+"&published="+bookPublication.val()+"&book_details="+bookDetails.val()+"&isbn="+ISBN.val();
+				AddBook(creation);
 				if ( bValid ) {
-				var creation = "cust_name="+customerName.val()+"&cust_details="+details.val();
-				AddCustomer(creation);
 				$( this ).dialog( "close" );
 				}
 			},
@@ -185,52 +177,31 @@ $(function() {
 				}
 			},
 			Close: function() {
-				allFieldsCustomer.val( "" ).removeClass( "ui-state-error" );
+				allFields.val( "" ).removeClass( "ui-state-error" );
 				}
 	});
-
-	$('#customerDetailsForm').dialog({
-		autoOpen: false,
-		height: 400,
-		width: 500,
-		modal: true,
-		draggable: true,
-		resizeable: false,
-		buttons:	{
-			Close: function() {
-				$( this ).dialog( "close" );
-				}
-			}
-	});
-
-	$('#bookDetailsForm').dialog({
-		autoOpen: false,
-		height: 400,
-		width: 500,
-		modal: true,
-		draggable: true,
-		resizeable: false,
-		buttons:	{
-			Close: function() {
-				$( this ).dialog( "close" );
-				}
-			}
-	});
-	
 	
 	/*
 	*  JQUERY FORM SELECTORS
 	*/
-
-	$( "#addBook" ).click(function() {
-		$( "#bookForm" ).dialog( "open" );
+	$( "#editPatientAccount" ).click(function() {
+		$( "#patientForm" ).dialog( "open" );
 		return false;
 	});
 
-	$( "#addCustomer" ).click(function() {
-		$( "#customerForm" ).dialog( "open" );
+	$( "#newPatient" ).click(function() {
+		$( "#patientForm" ).dialog( "open" );
 		return false;
-	});
+	});	
 	
+	$( "#newPatientMetrics" ).click(function() {
+		$( "#metricsForm" ).dialog( "open" );
+		return false;
+	});	
+	
+	$( "#newEmployeeMetrics" ).click(function() {
+		$( "#metricsForm" ).dialog( "open" );
+		return false;
+	});	
 });
 

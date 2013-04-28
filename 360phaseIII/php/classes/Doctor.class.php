@@ -40,7 +40,9 @@ class Doctor extends Employee
     
     public function getPatients()
     {
-        return $this->patients;
+        $result = mysql_query("SELECT Users.username, first_name, last_name FROM Patients WHERE doctor_id = '$this->employeeID';");
+        $patients = mysql_fetch_array($result);
+        return $patients;
     }
 }
 

@@ -1,6 +1,8 @@
 <?php
 
 include_once('dbconnect.class.php');
+//include_once('Employee.class.php');
+include_once('User.class.php');
 
 $con = new dbconnect();
 $con->connect();
@@ -45,6 +47,16 @@ class InfoController
      public function getInfo($username){
         $this->user = new User($username);
         return $this->user->getInfo();
+    }
+    public function getJsonInfo($username){
+        $this->user = new User($username);
+        return $this->user->getJsonInfo();
+    }
+    
+    public function getPatients($username){
+        $employee = new Employee($username);
+        $patients = $employee->getPatients();
+        return $patients;
     }
 }
 

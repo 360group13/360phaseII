@@ -14,7 +14,7 @@ class Employee extends User{
         parent::__construct($username);
         $result = mysql_query("SELECT * FROM employee WHERE username = '$username';");
         $employee = mysql_fetch_array($result);
-        $this->employeeID = (isset($patient['employee_id'])) ? $patient['employee_id'] : "";
+        $this->employeeID = $employee['employee_id'];
     }
     
     function __construct2($employeeID, $empty)
@@ -23,6 +23,18 @@ class Employee extends User{
         $username = mysql_fetch_array($result);
         parent::__construct($username);     
         $this->employeeID = $employeeID;
+    }
+    
+    public function getPatients()
+    {
+        $sql = mysql_query("SELECT Patients.username, first_name, last_name FROM patients, users WHERE (Patients.doctor_id = '$this->employeeID' OR Patients.nurse_id = '$this->employeeID') AND Users.username = Patients.username;");
+        $patients = array();
+        $i = 0;
+        while($result = mysql_fetch_array($sql)){
+            $patients[$i] = $result[0]."|".$result[1]."|".$result[2];
+            $i++;
+        }
+        return json_encode($patients);
     }
 }
 

@@ -1,3 +1,28 @@
+function patientsTable(patientUsername, patientFirstName, patientLastName, classname) {
+
+	//obtaining parent element
+	var ni = document.getElementById("tableBodyPatients"); //this is what getElementById is http://www.tizag.com/javascriptT/javascript-getelementbyid.php
+	
+	//create table elements
+	var newtr = document.createElement('tr');
+	var newtd1 = document.createElement('td');
+	var newtd2 = document.createElement('td');
+	
+	//set attributes to new element
+	newtr.setAttribute("class", " selectPatient");
+	newtd1.setAttribute("value", patientUsername);
+	newtd2.setAttribute("class", classname);
+	
+	//what is in the container
+	newtd1.innerHTML = patientLastName + ", " + patientFirstName;
+	newtd2.innerHTML = "<i class=\"icon-chevron-right\"></i>";
+	
+	//makes it a child of the table div
+	newtr.appendChild(newtd1);
+	newtr.appendChild(newtd2);
+	ni.appendChild(newtr);
+}
+
 function addCustomerTable(customerID, customerName, registrationDate, bookName, purchaseDate, returnDate, classname ) {
 
 	//obtaining parent element

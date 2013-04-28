@@ -42,7 +42,14 @@ function makeBookTable( json ){
 function makeCustomerTable( json ){
 	for( var i = 0; i < json.length; i++){
 		var parameters = json[i].split("|");
-		addCustomerTable( parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], "customerTableElement", type);
+		addCustomerTable( parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], "customerTableElement");
+	}
+}
+
+function makePatientsTable( json ){
+	for( var i = 0; i < json.length; i++){
+		var parameters = json[i].split("|");
+		patientsTable(parameters[0], parameters[1], parameters[2], "patientTableElement");
 	}
 }
 
@@ -83,18 +90,38 @@ function DeleteCustomer(customerName) {
 		Click2Delay// The function to call on completion.
 		);
 	}
-function ViewAllBooks() {
-		$.getJSON(
-		"/php/ViewAllBooks.php", // The server URL
-		{},
-		makeBookTable
+function viewMyInfo(username) {
+            var json;
+                $.getJSON(
+			"/360phaseII/360phaseIII/php/viewMyInfo.php", // The server URL
+			{username: username},
+			function (jsonR) {
+                            json = jsonR.split("|");
+                            document.getElementById("myInfoFName").innerHTML = json[1];
+                            document.getElementById("myInfoLName").innerHTML = json[2];
+							document.getElementById("myInfoGender").innerHTML = json[3];
+							document.getElementById("myInfoDOB").innerHTML = json[4];
+							document.getElementById("myInfoAddress").innerHTML = json[5];
+							document.getElementById("myInfoCity").innerHTML = json[6];
+							document.getElementById("myInfoState").innerHTML = json[7];
+							document.getElementById("myInfoZip").innerHTML = json[8];
+							document.getElementById("myInfoPhNum").innerHTML = json[9];
+                        }
 		);
 	}
+
 function ViewAllCustomers() {
 		$.getJSON(
 		"/php/ViewAllCustomers.php", // The server URL
 		{},
 		makeCustomerTable
+		);
+	}
+function viewPatients(username) {
+		$.getJSON(
+		"/360phaseII/360phaseIII/php/viewPatients.php", // The server URL
+		{username: username},
+		makePatientsTable
 		);
 	}
 function CheckoutBook(bookName){

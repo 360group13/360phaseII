@@ -46,185 +46,320 @@
     <script src = "/360phaseII/360phaseIII/js/dbfunctions.js"/></script>
 
     <script>
-	var username = "<?= $firstName ?>";
+	var firstName = "<?= $firstName ?>";
+        var username = "<?= $username ?>";
 	var type = "<?= $type ?>";
 	$(document).ready(function() {
 
-	if (type === "Guest"){
-		$("#login").parent().prepend("Hello, " + type);
-		$("#logout").hide();
-	}
-	else
-		$("#logout").parent().prepend("Hello, " + type + " " + username + "   ");
-	
-	if (type === "Guest" || type === "Customer"){
-		$("#addBook").hide();
-		$(".removeBook").hide();
-		$("#customerTab").hide();
-		$("#removeLegend").hide();
-	}
+            $("#logout").parent().prepend("Hello, " + type + " " + firstName + "   ");
 
-	if (type === "Admin" || type === "Customer"){
-		$("#login").hide();	
-	}
+            if (type === "Doctor" || type === "Nurse"){
+                    $("#myRecordsTab").hide();
+                    $("#patientSchedule").hide();
+                    viewPatients(username);
+            }
 
+            if (type === "Patient"){
+                    $("#patientsTab").hide();
+                    $("#employeeSchedule").hide();
+            }
+            viewMyInfo(username);
 	});
-	</script>
+    </script>
 </head>
-<body onload="ViewAllBooks()">
+<body>
 <div class = "containerBackground">
 	<div class = "container" >
 		<div class="row">
 			<div class="span12">
+                                <div style = "float: right;">
+                                    <button type="button" class = "btn btm-inverse" id = "logout" onclick="window.location.href='logout.php'">Logout</button>
+                                </div>
 				<div class = "page-header">
-				<h1>Library Management System</h1>
+                                    <h1>Well Check Clinic</h1>
 				</div>
-				<div style = "float: right;">
-					<button type="button" class = "btn btm-inverse" id = "logout" onclick="window.location.href='logout.php'">Logout</button>
-				</div>
+                            
 				<div class="tabbable">
 					<!-- Das Tabs -->
 					<ul class="nav nav-tabs" id="myTab">
-					  <li class="active"><a href="#Books" data-toggle="tab"><i class="icon-book"></i>Books</a></li>
-					  <li><a href="#Customers" data-toggle="tab" id = "customerTab"><i class="icon-user"></i>Customers</a></li>
+					  <li><a href="#Books" data-toggle="tab" id = "patientsTab"><i class="icon-user"></i>Patients</a></li>
+                                          <li><a href="#myRecords" data-toggle="tab" id = "myRecordsTab"><i class="icon-book"></i>My Records</a></li>
+					  <li><a href="#Customers" data-toggle="tab" id = "customerTab"><i class="icon-book"></i>Schedule</a></li>
+                                          <li class="active"><a href="#myAccount" data-toggle="tab" id = "myAccountTab"><i class="icon-folder-open"></i>MyAccount</a></li>                                          
 					</ul>
 					<div class="tab-content">
-						<!-- Books -->
-						<div class="tab-pane active" id="Books">
-							<div class = "row">
-								<div class = "span4">
-									<!-- Use Jquery Selectors instead of functions -->
-									<br>
-									<button type="button" class = "btn" id = "addBook">Add Book</button>
-									<br><br>
-									<button type="button" class = "btn" id = "viewAllBooks">View All Books</button>
-									<br><br>
-									<input type="text" class = "input-large search-query" id = "bookSearch" value = "search by name/author">
-									<button type="button" class = "btn" id="bookSearchButton" >Search</button>
-								</div>
-								<div class = "span8">
-									<div class = "tableContainer">
-										<!--table used to hold all database values-->
-										<table id = "dataTableCustomer" class = "table table-striped table-hover">
-											<thead>
-												<tr>
-													<td>Book Name</td>
-													<td>Author </td>
-													<td>Publisher </td>
-													<td>Issued</td>
-													<td>Returned</td>
-													<td>Customer ID</td>
-													<td>ISBN</td>
-													<td></td>
-												</tr>
-											</thead>
-											<!-- The table is accessed through its ID and tableMaker.js is used to add the cells -->
-											<tbody id = "tableBodyBook">
-												
-											</tbody>
-											<!-- Could be used for pagination or anything else like a refresh button -->
-											<tfoot id = "tableFootCustomer">
-											</tfoot>
-										</table>
-									</div>
-								</div>
+						<!-- Patients -->
+						<div class="tab-pane" id="Books">
+                                                    <div class="container-fluid">
+                                                        <div class="row-fluid">
+
+                                                            <div class="span2">
+                                                                <!--Sidebar content-->
+                                                                
+                                                                <div style = "float: center;">
+                                                                    <button type="button" class = "btn btm-inverse" id = "newPatient">New Patient</button>
+                                                                </div>
+                                                                <table id = "dataTablePatients" class = "table table-striped table-hover" style = "float: left;">
+                                                                        <!-- Used as the header for each category -->
+                                                                        <!-- The table is accessed through its ID and tableMaker.js is used to add the cells -->
+                                                                        <thead>
+                                                                                <tr>
+                                                                                        <td><strong>Select a patient:</strong></td>
+                                                                                </tr>
+                                                                        </thead>
+                                                                        <tbody id = "tableBodyPatients">
+                                                                        </tbody>
+                                                                        <!-- Could be used for pagination or anything else like a refresh button -->
+                                                                        <tfoot id = "tableFootCustomer">
+                                                                        </tfoot>
+                                                                </table>
+                                                            </div>
+
+                                                            <div class="span10">
+                                                                <!--Body content-->                                                                
+                                                                <div class="tabbable">
+                                                                    <!--Tab Definition-->
+                                                                    <ul id="patientTabs" class="nav nav-tabs">
+                                                                        <li class="active"><a href="#patientInfo" data-toggle="tab">Patient Info</a></li>
+                                                                        <li><a href="#patientMetrics" data-toggle="tab">Metrics</a></li>
+                                                                    </ul>
+                                                                    
+                                                                    <div class="tab-content">
+                                                                        <!--Patient Information tab-->
+                                                                        <div class="tab-pane active" id="patientInfo">
+                                                                            <div style = "float: right;">
+                                                                                    <button type="button" class = "btn btm-inverse" id = "editPatientAccount">Edit Patient</button>
+                                                                            </div>
+                                                                            <div class=", row-fluid">
+                                                                                <div class="text-right, span2"><strong>First Name:</strong></div>
+                                                                                <div class="text-left, span2" id="patientInfoFName">Dummy</div>
+                                                                                <div class="text-right, span2"><strong>Last Name:</strong></div>
+                                                                                <div class="text-left, span2" id="patientInfoLName">Dummy</div>
+                                                                            </div>
+                                                                            
+                                                                            <div class=", row-fluid">
+                                                                                <div class="text-right, span2"><strong>Gender:</strong></div>
+                                                                                <div class="text-left, span2" id="patientInfoGender">Dummy</div>
+                                                                                <div class="text-right, span2"><strong>Date of Birth:</strong></div>
+                                                                                <div class="text-left, span2" id="patientInfoDOB">Dummy</div>
+                                                                            </div>
+                                                                            
+                                                                            <div class=", row-fluid">
+                                                                                <div class="text-right, span1"><strong>Address:</strong></div>
+                                                                                <div class="text-left, span2" id="patientInfoAddress">Dummy</div>
+                                                                                <div class="text-right, span1"><strong>City:</strong></div>
+                                                                                <div class="text-left, span1" id="patientInfoCity">Dummy</div>
+                                                                                <div class="text-right, span1"><strong>State:</strong></div>
+                                                                                <div class="text-left, span1" id="patientInfoState">Dummy</div>
+                                                                                <div class="text-right, span1"><strong>Zip:</strong></div>
+                                                                                <div class="text-left, span1" id="patientInfoZip">Dummy</div>
+                                                                            </div>
+                                                                            
+                                                                            <div class=", row-fluid">
+                                                                                <div class="text-right, span2"><strong>Phone Number:</strong></div>
+                                                                                <div class="text-left, span2" id="patientInfoPhNum">Dummy</div>                                                                                
+                                                                            </div>
+                                                                            
+                                                                            <div class=", row-fluid">
+                                                                                <div class="text-right, span2"><strong>Insurance Company:</strong></div>
+                                                                                <div class="text-left, span2" id="patientInfoInsComp">Dummy</div>
+                                                                                <div class="text-right, span2"><strong>Insurance ID:</strong></div>
+                                                                                <div class="text-left, span2" id="patientInfoInsID">Dummy</div>
+                                                                            </div>
+                                                                            
+                                                                        </div>
+                                                                        <!--Patient Metrics tab-->
+                                                                        <div class="tab-pane" id="patientMetrics">
+                                                                            <div style = "float: right;">
+                                                                                <button type="button" class = "btn btm-inverse" id = "newEmployeeMetrics">New Metrics</button>
+                                                                            </div>
+                                                                            <table id = "dataTableDoctorMetrics" class = "table table-striped table-hover ">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                            <td>Input Date</td>
+                                                                                            <td>Weight</td>
+                                                                                            <td>Sugar Level</td>
+                                                                                            <td>Blood Pressure</td>
+                                                                                            <td>Prescription </td>
+                                                                                            <td>Observations</td>
+                                                                                            <td></td>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody id = "tableBodyDoctorMetrics">
+                                                                                </tbody>
+                                                                                <!-- Could be used for pagination or anything else like a refresh button -->
+                                                                                <tfoot id = "tableFootCustomer">
+                                                                                </tfoot>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- My Records -->
+						<div class="tab-pane" id="myRecords">
+							<div class = "container">
+                                                            <div class = "span11">
+                                                                <div style = "float: center;">
+                                                                    <button type="button" class = "btn btm-inverse" id = "newPatientMetrics">New Metrics</button>
+                                                                </div>
+								<table id = "dataTablePatientMetrics" class = "table table-striped table-hover ">
+                                                                    <strong>
+                                                                    <thead>
+                                                                        <tr>
+                                                                                <td>Input Date</td>
+                                                                                <td>Weight</td>
+                                                                                <td>Sugar Level</td>
+                                                                                <td>Blood Pressure</td>
+                                                                                <td>Prescription </td>
+                                                                                <td>Observation</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    </strong>
+                                                                    <tbody id = "tableBodyPatientMetrics">
+                                                                    </tbody>
+                                                                    <!-- Could be used for pagination or anything else like a refresh button -->
+                                                                    <tfoot id = "tableFootCustomer">
+                                                                    </tfoot>
+                                                                </table>
+                                                            </div>                                                            
 							</div>
 						</div>
-						<!-- Customers -->
+						<!-- Schedule -->
 						<div class="tab-pane" id="Customers">
-							<div class = "row">
-								<div class = "span4">
-									<!-- Use Jquery Selectors instead of functions -->
-									<br>
-									<button type="button" class = "btn" id = "addCustomer">Add Customer</button>
-									<br><br>
-									<button type="button" class = "btn" id = "viewAllCustomers">View All Customers</button>
-									<br><br>
-									<input type="text" class = "input-large search-query" id = "customerSearch"  value = "search by name">
-									<button type="button" class = "btn" id="customerSearchButton">Search</button>
-								</div>
-								<div class = "span8">
-									<div class = "tableContainer">
-										<!--table used to hold all database values-->
-										<table id = "dataTableCustomer" class = "table table-striped table-hover ">
-											<!-- Used as the header for each category -->
-											<!-- The table is accessed through its ID and tableMaker.js is used to add the cells -->
-											<thead>
-												<tr>
-													<td>ID</td>
-													<td>Name </td>
-													<td>Registation Date </td>
-													<td>Book Name</td>
-													<td>Purchase Date </td>
-													<td>Return Date</td>
-													<td></td>
-												</tr>
-											</thead>
-											<tbody id = "tableBodyCustomer">
-											</tbody>
-											<!-- Could be used for pagination or anything else like a refresh button -->
-											<tfoot id = "tableFootCustomer">
-											</tfoot>
-										</table>
-									</div>
-								</div>
+							<div class = "container" id="employeeSchedule">
+                                                            <div class = "span11">
+								<table id = "dataTableEmployeeSchedule" class = "table table-striped table-hover ">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <td><strong>Scheduled Date</strong></td>
+                                                                            <td><strong>Time</strong></td>
+                                                                            <td><strong>Patient</strong></td>
+                                                                            <td><strong>Phone Number</strong></td>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody id = "tableBodyPatientMetrics">
+                                                                    </tbody>
+                                                                    <!-- Could be used for pagination or anything else like a refresh button -->
+                                                                    <tfoot id = "tableFootCustomer">
+                                                                    </tfoot>
+                                                                </table>
+                                                            </div>                                                            
+							</div>
+                                                        <div class = "container" id="patientSchedule">
+                                                            <div class = "span11">
+								<table id = "dataTablePatientSchedule" class = "table table-striped table-hover ">
+                                                                    <thead>
+                                                                        <tr>
+                                                                                <td><strong>Scheduled Date</strong></td>
+                                                                                <td><strong>Time</strong></td>
+                                                                                <td><strong>Doctor</strong></td>
+                                                                                <td><strong>Nurse</strong></td>
+                                                                                <td><strong>Office Phone</strong></td>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody id = "tableBodyPatientMetrics">
+                                                                    </tbody>
+                                                                    <!-- Could be used for pagination or anything else like a refresh button -->
+                                                                    <tfoot id = "tableFootCustomer">
+                                                                    </tfoot>
+                                                                </table>
+                                                            </div>                                                            
+							</div>
+						</div>
+                                                <!-- MyAccount -->
+						<div class="tab-pane active" id="myAccount">
+							<div class = "container" id="myAccountInfo">
+                                                            <div class=", row-fluid">
+                                                                <div class="text-right, span2"><strong>First Name:</strong></div>
+                                                                <div class="text-left, span2" id="myInfoFName"></div>
+                                                                <div class="text-right, span2"><strong>Last Name:</strong></div>
+                                                                <div class="text-left, span2" id="myInfoLName"></div>
+                                                            </div>
+
+                                                            <div class=", row-fluid">
+                                                                <div class="text-right, span2"><strong>Gender:</strong></div>
+                                                                <div class="text-left, span2" id="myInfoGender"></div>
+                                                                <div class="text-right, span2"><strong>Date of Birth:</strong></div>
+                                                                <div class="text-left, span2" id="myInfoDOB"></div>
+                                                            </div>
+
+                                                            <div class=", row-fluid">
+                                                                <div class="text-right, span1"><strong>Address:</strong></div>
+                                                                <div class="text-left, span2" id="myInfoAddress"></div>
+                                                                <div class="text-right, span1"><strong>City:</strong></div>
+                                                                <div class="text-left, span1" id="myInfoCity"></div>
+                                                                <div class="text-right, span1"><strong>State:</strong></div>
+                                                                <div class="text-left, span1" id="myInfoState"></div>
+                                                                <div class="text-right, span1"><strong>Zip:</strong></div>
+                                                                <div class="text-left, span1" id="myInfoZip"></div>
+                                                            </div>
+
+                                                            <div class=", row-fluid">
+                                                                <div class="text-right, span2"><strong>Phone Number:</strong></div>
+                                                                <div class="text-left, span2" id="myInfoPhNum"></div>                                                                                
+                                                            </div>                                                        
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div style = "float: right;">
-				<i class = "icon-shopping-cart"></i>Check-out/Check-in
-				<br>
-				<span id = "removeLegend">
-					<i class = "icon-remove"></i>Remove
-				</span>
-				<p>*Click on an item to get details</p>
-			</div>
 		</div>
 	</div>
 </div>
 
-<!-- ADD BOOK -->
-<div id="bookForm" title="ADD A BOOK">
-	<p class="validateTips">All form fields are required.</p>
+<!-- ADD Patient -->
+<div id="patientForm" title="ADD A PATIENT">
 	<form>
 		<fieldset>
-			<label for="event">Book Name:</label>
-			<input type="text" name="bookName" id="bookName" style="width: 400px; height: 30px; margin-top:10;"/>
-			<label for="event">Author:</label>
-			<input type="text" name="author" id="author" style="width: 400px; height: 30px; margin-top:10;"/>
-			<label for="event">Book Publication:</label>
-			<input type="text" name="bookPublication" id="bookPublication" style="width: 400px; height: 30px; margin-top:10;"/>
-			<label for="event">Book Details:</label>
-			<input type="text" name="bookDetails" id="bookDetails" style="width: 400px; height: 30px; margin-top:10;"/>
-			<label for="User">ISBN:</label>
-			<input type="text" name="ISBN" id="ISBN" value="" class="text ui-widget-content ui-corner-all" style="width: 400px; height: 30px; margin-top:15px;"/>
+                    <label for="event">Username:</label>
+                    <input type="text" name="patientFormUserName" id="patientFormUserName" style="width: 400px; height: 30px; margin-top:10;"/>
+                    <label for="event">Password:</label>
+                    <input type="password" name="patientFormPassword" id="patientFormPassword" style="width: 400px; height: 30px; margin-top:10;"/>
+                    <label for="event">First Name:</label>
+                    <input type="text" name="patientFormFirstName" id="patientFormFirstName" style="width: 400px; height: 30px; margin-top:10;"/>
+                    <label for="event">Last Name:</label>
+                    <input type="text" name="patientFormLasttName" id="patientFormLasttName" style="width: 400px; height: 30px; margin-top:10;"/>
+                    <label for="event">Address:</label>
+                    <input type="text" name="patientFormAddress" id="patientFormAddress" style="width: 400px; height: 30px; margin-top:10;"/>
+                    <label for="event">City:</label>
+                    <input type="text" name="patientFormCity" id="patientFormCity" style="width: 400px; height: 30px; margin-top:10;"/>
+                    <label for="event">State:</label>
+                    <input type="text" name="patientFormState" id="patientFormState" style="width: 400px; height: 30px; margin-top:10;"/>
+                    <label for="event">Zip:</label>
+                    <input type="text" name="patientFormZip" id="patientFormState" style="width: 400px; height: 30px; margin-top:10;"/>
+                    <label for="event">Insured?</label>
+                    <input type="checkbox" name="patientFormInsured" id="patientFormInsured" style="margin-top:10;"/>
+                    <label for="event">Insurance Company:</label>
+                    <input type="text" name="patientFormInsComp" id="patientFormInsComp" style="width: 400px; height: 30px; margin-top:10;"/>
+                    <label for="event">Insurance ID:</label>
+                    <input type="text" name="patientFormInsID" id="patientFormInsID" style="width: 400px; height: 30px; margin-top:10;"/>
+                    <label for="event">Insurance Phone Number:</label>
+                    <input type="text" name="patientFormInsPh" id="patientFormInsPh" style="width: 400px; height: 30px; margin-top:10;"/>    
+                    <label for="event">Doctor ID:</label>
+                    <input type="text" name="patientFormDocID" id="patientFormDocID" style="width: 400px; height: 30px; margin-top:10;"/>    
+                    <label for="User">Nurse ID:</label>
+                    <input type="text" name="patientFormNurseID" id="patientFormNurseID" value="" class="text ui-widget-content ui-corner-all" style="width: 400px; height: 30px; margin-top:15px;"/>
 		</fieldset>
 	</form>
 </div>
 
-<!-- ADD CUSTOMER -->
-<div id="customerForm" title="ADD A CUSTOMER">
-	<p class="validateTips">All form fields are required.</p>
+<!-- ADD Metrics -->
+<div id="metricsForm" title="ADD METRICS">
 	<form>
 		<fieldset>
-			<label for="event">Customer Name:</label>
-			<input type="text" name="customerName" id="customerName" style="width: 400px; height: 30px; margin-top:10;"/>
-			<label for="User">Details:</label>
-			<input type="text" name="customerDetails" id="customerDetails" value="" class="text ui-widget-content ui-corner-all" style="width: 400px; height: 30px; margin-top:15px;"/>
+                    <label for="event">Weight:</label>
+                    <input type="text" name="metricsFormWeight" id="metricsFormWeight" style="width: 400px; height: 30px; margin-top:10;"/>
+                    <label for="event">Blood Pressure:</label>
+                    <input type="password" name="metricsFormBp" id="metricsFormBp" style="width: 400px; height: 30px; margin-top:10;"/>  
+                    <label for="User">Sugar Level:</label>
+                    <input type="text" name="metricsFormSl" id="metricsFormSl" value="" class="text ui-widget-content ui-corner-all" style="width: 400px; height: 30px; margin-top:15px;"/>
 		</fieldset>
 	</form>
-</div>
-
-<!-- CUSTOMER DETAILS FORM -->
-<div id="customerDetailsForm" title="CUSTOMER DETAILS">
-	<!-- filled out dynamically -->
-</div>
-
-<!-- BOOK DETAILS FORM -->
-<div id="bookDetailsForm" title="BOOK DETAILS">
-	<!-- filled out dynamically -->
 </div>
 
 </body>

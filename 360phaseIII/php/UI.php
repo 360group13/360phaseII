@@ -20,7 +20,7 @@
 	<script src = "/360phaseII/360phaseIII/js/ui.js"/></script>
 	<!-- DB functions -->
 	<script src = "/360phaseII/360phaseIII/js/dbfunctions.js"/></script>
-        
+
     </head>
     
     <body>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="row offset3 span6">     
                     <div class="offset2"><h2>Log In</h2></div>
-                    <form action="login.php" method="post" class="form-horizontal"> 
+                    <form class="form-horizontal"> 
                             <div class="control-group">
                                 <label class="control-label" for="username">Username</label>  
                                 <div class="controls">  
@@ -56,7 +56,18 @@
                                 <button type="submit" name='forgotpassword' class="btn btn-primary">Forgot Password?</button>
                             </div>
                     </form>
-
+                    
+                    <script type="text/javascript">
+                        $('#submit-login').on("click")
+                        $.getJSON(
+                            "/360phaseII/360phaseIII/php/login.php", // The server URL
+                            {username: $('#username'),
+                             password: $('#password')},
+                            function (json) {
+                                document.getElementById("resultLogin").innerHTML = json;
+                            }
+                        );
+                    </script>
                 </div>
             </div>
         </div>        

@@ -42,12 +42,17 @@ class User
         $this->zip = (isset($user['zip'])) ? $user['zip'] : "";
         $this->phone = (isset($user['phone'])) ? $user['phone'] : "";
     } 
-    
     function getInfo()
     {
         $info = array("firstName" => $this->firstName, "lastName" => $this->lastName, "gender" => $this->gender, "dateOB" => $this->dateOB, 
-                    "address" => $this->address, "city" => $this->city, "state" => $this->state, "zip" => $this->zip, "phone" => $this->phone);
+                    "address" => $this->address, "city" => $this->city, "state" => $this->state, "zip" => $this->zip, "phone" => $this->phone); 
         return $info;
-    }   
+    }
+    
+    function getJsonInfo()
+    {
+        $info = $this->username."|".$this->firstName."|".$this->lastName."|".$this->gender."|".$this->dateOB."|".$this->address."|".$this->city."|".$this->state."|".$this->zip."|".$this->phone;
+        return $info;
+    }  
 }
 ?>  
