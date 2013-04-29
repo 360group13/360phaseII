@@ -58,7 +58,11 @@
                     $("#patientSchedule").hide();
                     viewPatients(username);
             }
-
+            
+            if (type === "Nurse"){
+                    $('#newPatientButton').hide();
+            }
+            
             if (type === "Patient"){
                     $("#patientsTab").hide();
                     $("#employeeSchedule").hide();

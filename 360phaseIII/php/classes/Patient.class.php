@@ -62,7 +62,7 @@ class Patient extends User{
     
     public function getMetrics()
     {
-        $sql = mysql_query("SELECT * FROM archives WHERE patient_id = '$this->patientID' ORDER BY date_stamp ASC;");
+        $sql = mysql_query("SELECT * FROM archives WHERE patient_id = '$this->patientID' ORDER BY date_stamp DESC;");
         $patients = array();
         $i = 0;
         while($result = mysql_fetch_array($sql)){
