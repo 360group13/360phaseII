@@ -137,14 +137,14 @@ $(function() {
 		resizeable: false,
 		buttons:	{
 			"Add Patient": function() {
-				var bValid = true;
 				creation = "username="+patientFormUserName.val()+"&password="+patientFormPassword.val()+"&firstname="+
 							patientFormFirstName.val()+"&lastname="+patientFormLastName.val()+"&address="+
 							patientFormAddress.val()+"&city="+patientFormCity.val()+"&state="+patientFormState.val()
 							+"&zip="+patientFormZip.val()+"&insured="+patientFormInsured.val()+"&insComp="+patientFormInsComp.val()
 							+"&insID="+patientFormInsID.val()+"&insPh="+patientFormInsPh.val()+"&docId="+patientFormDocID.val()+
 							"&nurId="+patientFormNurseID.val();
-				AddPatient(creation);				
+				AddPatient(creation);
+                                $( this ).dialog( "close" );
 			},
 			Cancel: function() {
 				$( this ).dialog( "close" );
@@ -193,7 +193,7 @@ $(function() {
 	});
 
 	$( "#newPatientButton" ).click(function() {
-		$( "#editPatientForm" ).dialog( "open" );
+		$( "#patientForm" ).dialog( "open" );
 		return false;
 	});	
 	

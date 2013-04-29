@@ -98,7 +98,7 @@
                                                                 <!--Sidebar content-->
                                                                 
                                                                 <div>
-                                                                    <button type="button" class = "btn btn-inverse btn-block" id = "newPatientButton">New Patient</button>
+                                                                    <button type="button" class = "btn btn-inverse btn-block" id = 'newPatientButton'>New Patient</button>
                                                                 </div>
                                                                 <table id = "dataTablePatients" class = "table table-hover table-bordered" style = "float: left;">
                                                                         <!-- Used as the header for each category -->

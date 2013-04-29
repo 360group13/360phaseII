@@ -92,17 +92,20 @@ class Patient extends User{
     
     public function update()
     {
-        $sql = mysql_query("SELECT * FROM patients WHERE patient_id = '$patientID';");
+        $sql = mysql_query("SELECT * FROM patients WHERE patient_id = '$this->patientID';");
         if(mysql_num_rows($sql) == 0){
-            mysql_query("INSERT INTO users (username, password, first_Name, last_Name, gender, dateOB, address, city, state, zip, phone, user_type)
-                         VALUES ('$this->username', '$this->password', '$this->firstName', '$this->lastName', '$this->gender', '$this->dateOB', '$this->address', '$this->city', '$this->state', '$this->zip', '$this->phone', 'Patient');");
-            mysql_query("INSERT INTO patients (username, insuranceState, insuranceComp, insurance_id, insurance_ph, doctor_id, nurse_id)
-                         VALUES ('$this->username', '$this->insuranceStat', '$this->insuranceComp', '$this->insuranceID', '$this->insurancePhNum', '$this->doctor', '$this->nurse');");
+            $result1 = mysql_query("INSERT INTO users username, password, first_Name, last_Name, gender, dateOB, address, city, state, zip, phone, user_type
+                         VALUES '$this->username', '$this->password', '$this->firstName', '$this->lastName', '$this->gender', $this->dateOB, '$this->address', '$this->city', '$this->state', $this->zip, $this->phone, 'Patient';");
+            $result2 = mysql_query("INSERT INTO patients username, insuranceComp, insurance_id, insurance_ph, doctor_id, nurse_id
+                         VALUES '$this->username', '$this->insuranceComp', $this->insuranceID, $this->insurancePhNum, $this->doctor, $this->nurse;");
         }
         else{                
-            mysql_query("UPDATE users 
-                         SET(username = '$this->username', password = '$this->password', first_Name = '$this->firstName', last_Name = '$this->lastName', gender = '$this->gender', dateOB = '$this->dateOB', address = '$this->address', city = '$this->city', state = '$this->state', zip = '$this->zip', phone = '$this->phone', user_type = 'Patient')
-                         WHERE (username = '$this->username');");
+            $result1 = mysql_query("UPDATE users 
+                         SET username = '$this->username', password = '$this->password', first_Name = '$this->firstName', last_Name = '$this->lastName', gender = '$this->gender', dateOB = $this->dateOB, address = '$this->address', city = '$this->city', state = '$this->state', zip = $this->zip, phone = $this->phone, user_type = 'Patient')
+                         WHERE username = '$this->username';");
+            $result2 = mysql_query("UPDATE patients 
+                         SET username = '$this->username', insuranceComp = '$this->insuranceComp', insurance_id = $this->insuranceID, insurance_ph = $this->insurancePhNum, doctor_id = $this->doctor, nurse_id = $this->nurse)
+                         WHERE username = '$this->username';");
         }
         
     }
