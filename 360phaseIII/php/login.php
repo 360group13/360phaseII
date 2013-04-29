@@ -10,11 +10,12 @@
 
     if($info->login($newUser, $newPass))
     {
-        echo json_encode("Login success. Redirecting...");
-        header("refresh: 0; showUser.php");
+        header("refresh: 1; showUser.php");
+        echo "Login success. Redirecting...";
     }
     else
     {
-        echo json_encode("Invalid username and/or password entered. Please try again.");
+        echo "Invalid username and/or password entered. Please try again.";
+        header("refresh: 1; ui.php");
     }
 ?>

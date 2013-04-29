@@ -17,17 +17,18 @@ class Patient extends User{
     private $doctor;
     private $nurse;
     
-    function __construct1($username)
+    function __construct($username)
     {
         parent::__construct($username);
         $result = mysql_query("SELECT * FROM patients WHERE username = '$username';");
         $patient = mysql_fetch_array($result);
-        $this->patientID = (isset($patient['patient_id'])) ? $patient['patient_id'] : "";
-        $this->insuranceComp = (isset($patient['insuranceComp'])) ? $patient['insuranceComp'] : "";
-        $this->insuranceState = (isset($patient['insuranceState'])) ? $patient['insuranceState'] : "";
-        $this->insuranceID = (isset($patient['insurance_id'])) ? $patient['insurance_id'] : "";
-        $this->insurancePhNum = (isset($patient['insurance_ph'])) ? $patient['insurance_ph'] : "";
-        $this->doctor = new Doctor($patient['doctor_id'], "");
+        $this->patientID = $patient['patient_id'];
+        $this->insuranceComp = $patient['insuranceComp'];
+        $this->insuranceStat = $patient['insuranceState'];
+        $this->insuranceID = $patient['insurance_id'];
+        $this->insurancePhNum = $patient['insurance_ph'];
+        $this->doctor = $patient['doctor_id'];
+        $this->nurse = $patient['nurse_id'];
     }
     
     function __construct2($patientID, $empty)
@@ -36,12 +37,13 @@ class Patient extends User{
         $patient = mysql_fetch_array($result);
         
         parent::__construct($patient['username']);
-        $this->patientID = (isset($patient['patient_id'])) ? $patient['patient_id'] : "";
-        $this->insuranceComp = (isset($patient['insuranceComp'])) ? $patient['insuranceComp'] : "";
-        $this->insuranceState = (isset($patient['insuranceState'])) ? $patient['insuranceState'] : "";
-        $this->insuranceID = (isset($patient['insurance_id'])) ? $patient['insurance_id'] : "";
-        $this->insurancePhNum = (isset($patient['insurance_ph'])) ? $patient['insurance_ph'] : "";
-        $this->doctor = new Doctor($patient['doctor_id'], "");
+        $this->patientID = $patient['patient_id'];
+        $this->insuranceComp = $patient['insuranceComp'];
+        $this->insuranceStat = $patient['insuranceState'];
+        $this->insuranceID = $patient['insurance_id'];
+        $this->insurancePhNum = $patient['insurance_ph'];
+        $this->doctor = $patient['doctor_id'];
+        $this->nurse = $patient['nurse_id'];
     }
     
     public function setMetrics($weight, $bp, $sugar)
@@ -49,39 +51,60 @@ class Patient extends User{
         
     }
     
-    public function insured()
+    function getJsonPatientInfo()
     {
-        return $insuranceState;
+        $info = $this->username."|".$this->firstName."|".$this->lastName.
+                "|".$this->gender."|".$this->dateOB."|".$this->address."|".
+                $this->city."|".$this->state."|".$this->zip."|".$this->phone.
+                "|".$this->insuranceComp."|".$this->insuranceID;
+        return $info;
     }
     
-    public function getUsername()
+    public function getMetrics()
     {
-        return $username;
+        $sql = mysql_query("SELECT * FROM archives WHERE patient_id = '$this->patientID' ORDER BY date_stamp ASC;");
+        $patients = array();
+        $i = 0;
+        while($result = mysql_fetch_array($sql)){
+            $patients[$i] = $result[7]."|".$result[2]."|".$result[4]."|".$result[3]."|".$result[5]."|".$result[6];
+            $i++;
+        }
+        return json_encode($patients);
     }
     
-    public function getPatientID()
+    public function setInfo($username, $password, $firstname, $lastname, $address, $city, $state, $zip, $insured, $insComp, $insID, $insPh, $docId, $nurId)
     {
-        return $patientID;
+        $this->username = $username;
+        $this->password = $password;
+        $this->firstName = $firstname;
+        $this->lastName = $lastname;
+        $this->address = $address;
+        $this->city = $city;
+        $this->state = $state;
+        $this->zip = $zip;
+        $this->insuranceComp = $insComp;
+        $this->insuranceStat = $insured;
+        $this->insuranceID = $insID;
+        $this->insurancePhNum = $insPh;
+        $this->doctor = $docId;
+        $this->nurse = $nurId;
     }
     
-    public function getInsuranceComp()
+    public function update()
     {
-        return $insuranceComp;
-    }
-    
-    public function getInsuranceState()
-    {
-        return $insuranceState;
-    }
-    
-    public function getInsuranceID()
-    {
-        return $insuranceID;
-    }
-    
-    public function getInsurancePhNum()
-    {
-        return $insurancePhNum;
+        $sql = mysql_query("SELECT * FROM patients WHERE patient_id = '$patientID';");
+        if(mysql_num_rows($sql) == 0){
+            mysql_query("INSERT INTO users (username, password, first_Name, last_Name, gender, dateOB, address, city, state, zip, phone, user_type)
+                         VALUES ('$this->username', '$this->password', '$this->firstName', '$this->lastName', '$this->gender', '$this->dateOB', '$this->address', '$this->city', '$this->state', '$this->zip', '$this->phone', 'Patient');");
+            mysql_query("INSERT INTO patients (username, insuranceState, insuranceComp, insurance_id, insurance_ph, doctor_id, nurse_id)
+                         VALUES ('$this->username', '$this->insuranceStat', '$this->insuranceComp', '$this->insuranceID', '$this->insurancePhNum', '$this->doctor', '$this->nurse');");
+        }
+        else{                
+            mysql_query("UPDATE users 
+                         SET(username = '$this->username', password = '$this->password', first_Name = '$this->firstName', last_Name = '$this->lastName', gender = '$this->gender', dateOB = '$this->dateOB', address = '$this->address', city = '$this->city', state = '$this->state', zip = '$this->zip', phone = '$this->phone', user_type = 'Patient')
+                         WHERE (username = '$this->username');");
+        }
+        
     }
 }
 

@@ -34,7 +34,7 @@ $(function() {
 	
 	//comment book
 	$("body").on("click", ".commentBook", function(){
-		BookDetails($(this).parent().find(":nth-child(1)").text());
+		BookDetails($(this).parent().parent().find(":nth-child(1)").text());
 		$( "#bookDetailsForm" ).dialog( "open" );
     });
 	
@@ -44,6 +44,11 @@ $(function() {
 		CustomerDetails(customerID);
 		$( "#customerDetailsForm" ).dialog( "open" );
     });
+	
+	//choose Patient
+	/*$("body").on("click", ".choosePatient", function(){
+		viewPatientInfo($(this).parent().find(":nth-child(1)").text());
+    });*/
 
 	/*
 	* ALL BUTTON SELECTORS. USE FOR FUNCTIONS
@@ -133,23 +138,21 @@ $(function() {
 		buttons:	{
 			"Add Patient": function() {
 				var bValid = true;
-				allFields.removeClass( "ui-state-error" );
-				// bValid = bValid && checkLength( $("ISBN").val(), "ISBN", 1, 15 );
-				// bValid = bValid && checkRegexp( Event.val(), /^[a-z]([0-9a-z_\s])+$/i, "Event name may consist of a-z, 0-9, underscores, begin with a letter." );		
-				// Steptoe: Testing sqlstuff
-				creation = "firstName="+firstName.val()+"&author="+author.val()+"&published="+bookPublication.val()+"&book_details="+bookDetails.val()+"&isbn="+ISBN.val();
-				AddBook(creation);
-				if ( bValid ) {
-				$( this ).dialog( "close" );
-				}
+				creation = "username="+patientFormUserName.val()+"&password="+patientFormPassword.val()+"&firstname="+
+							patientFormFirstName.val()+"&lastname="+patientFormLastName.val()+"&address="+
+							patientFormAddress.val()+"&city="+patientFormCity.val()+"&state="+patientFormState.val()
+							+"&zip="+patientFormZip.val()+"&insured="+patientFormInsured.val()+"&insComp="+patientFormInsComp.val()
+							+"&insID="+patientFormInsID.val()+"&insPh="+patientFormInsPh.val()+"&docId="+patientFormDocID.val()+
+							"&nurId="+patientFormNurseID.val();
+				AddPatient(creation);				
 			},
 			Cancel: function() {
 				$( this ).dialog( "close" );
-				}
+			}
 			},
 			Close: function() {
 				allFields.val( "" ).removeClass( "ui-state-error" );
-				}
+			}
 	});
 	
 	$('#metricsForm').dialog({
@@ -189,8 +192,8 @@ $(function() {
 		return false;
 	});
 
-	$( "#newPatient" ).click(function() {
-		$( "#patientForm" ).dialog( "open" );
+	$( "#newPatientButton" ).click(function() {
+		$( "#editPatientForm" ).dialog( "open" );
 		return false;
 	});	
 	
@@ -202,6 +205,10 @@ $(function() {
 	$( "#newEmployeeMetrics" ).click(function() {
 		$( "#metricsForm" ).dialog( "open" );
 		return false;
-	});	
+	});
+        
+        /*
+	* ALL BUTTON SELECTORS. USE FOR FUNCTIONS
+	*/
 });
 

@@ -1,7 +1,8 @@
 <?php
 
 include_once('dbconnect.class.php');
-//include_once('Employee.class.php');
+include_once('Employee.class.php');
+include_once('Patient.class.php');
 include_once('User.class.php');
 
 $con = new dbconnect();
@@ -10,6 +11,7 @@ $con->connect();
 class InfoController
 {
     private $user;
+    private $patient;
     
     function __construct() {  
         
@@ -48,15 +50,34 @@ class InfoController
         $this->user = new User($username);
         return $this->user->getInfo();
     }
+    
     public function getJsonInfo($username){
         $this->user = new User($username);
         return $this->user->getJsonInfo();
+    }
+    
+    public function getJsonPatientInfo($username){
+            $this->patient = new Patient($username);
+            return $this->patient->getJsonPatientInfo();
     }
     
     public function getPatients($username){
         $employee = new Employee($username);
         $patients = $employee->getPatients();
         return $patients;
+    }
+    
+    public function getJsonMetricInfo($username)
+    {
+        $this->patient = new Patient($username);
+        $metrics = $this->patient->getMetrics();
+        return $metrics;
+    }
+    
+    public function addPatient($username, $password, $firstname, $lastname, $address, $city, $state, $zip, $insured, $insComp, $insID, $insPh, $docId, $nurId)
+    {
+        $this->patient = new Patient($username);
+        $this->patient->setInfo($username, $password, $firstname, $lastname, $address, $city, $state, $zip, $insured, $insComp, $insID, $insPh, $docId, $nurId);
     }
 }
 

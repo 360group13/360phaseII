@@ -62,6 +62,7 @@
             if (type === "Patient"){
                     $("#patientsTab").hide();
                     $("#employeeSchedule").hide();
+                    viewOwnMetrics(username);
             }
             viewMyInfo(username);
 	});
@@ -73,7 +74,7 @@
 		<div class="row">
 			<div class="span12">
                                 <div style = "float: right;">
-                                    <button type="button" class = "btn btm-inverse" id = "logout" onclick="window.location.href='logout.php'">Logout</button>
+                                    <button type="button" class = "btn btn-inverse" id = "logout" onclick="window.location.href='logout.php'">Logout</button>
                                 </div>
 				<div class = "page-header">
                                     <h1>Well Check Clinic</h1>
@@ -96,15 +97,15 @@
                                                             <div class="span2">
                                                                 <!--Sidebar content-->
                                                                 
-                                                                <div style = "float: center;">
-                                                                    <button type="button" class = "btn btm-inverse" id = "newPatient">New Patient</button>
+                                                                <div>
+                                                                    <button type="button" class = "btn btn-inverse btn-block" id = "newPatientButton">New Patient</button>
                                                                 </div>
-                                                                <table id = "dataTablePatients" class = "table table-striped table-hover" style = "float: left;">
+                                                                <table id = "dataTablePatients" class = "table table-hover table-bordered" style = "float: left;">
                                                                         <!-- Used as the header for each category -->
                                                                         <!-- The table is accessed through its ID and tableMaker.js is used to add the cells -->
                                                                         <thead>
                                                                                 <tr>
-                                                                                        <td><strong>Select a patient:</strong></td>
+                                                                                        <th><strong>Select a patient:</strong></th>
                                                                                 </tr>
                                                                         </thead>
                                                                         <tbody id = "tableBodyPatients">
@@ -128,61 +129,60 @@
                                                                         <!--Patient Information tab-->
                                                                         <div class="tab-pane active" id="patientInfo">
                                                                             <div style = "float: right;">
-                                                                                    <button type="button" class = "btn btm-inverse" id = "editPatientAccount">Edit Patient</button>
+                                                                                    <button type="button" class = "btn btn-inverse" id = "editPatientAccount">Edit Patient</button>
                                                                             </div>
                                                                             <div class=", row-fluid">
                                                                                 <div class="text-right, span2"><strong>First Name:</strong></div>
-                                                                                <div class="text-left, span2" id="patientInfoFName">Dummy</div>
+                                                                                <div class="text-left, span2" id="patientInfoFName"></div>
                                                                                 <div class="text-right, span2"><strong>Last Name:</strong></div>
-                                                                                <div class="text-left, span2" id="patientInfoLName">Dummy</div>
+                                                                                <div class="text-left, span2" id="patientInfoLName"></div>
                                                                             </div>
                                                                             
                                                                             <div class=", row-fluid">
                                                                                 <div class="text-right, span2"><strong>Gender:</strong></div>
-                                                                                <div class="text-left, span2" id="patientInfoGender">Dummy</div>
+                                                                                <div class="text-left, span2" id="patientInfoGender"></div>
                                                                                 <div class="text-right, span2"><strong>Date of Birth:</strong></div>
-                                                                                <div class="text-left, span2" id="patientInfoDOB">Dummy</div>
+                                                                                <div class="text-left, span2" id="patientInfoDOB"></div>
                                                                             </div>
                                                                             
                                                                             <div class=", row-fluid">
                                                                                 <div class="text-right, span1"><strong>Address:</strong></div>
-                                                                                <div class="text-left, span2" id="patientInfoAddress">Dummy</div>
+                                                                                <div class="text-left, span2" id="patientInfoAddress"></div>
                                                                                 <div class="text-right, span1"><strong>City:</strong></div>
-                                                                                <div class="text-left, span1" id="patientInfoCity">Dummy</div>
+                                                                                <div class="text-left, span1" id="patientInfoCity"></div>
                                                                                 <div class="text-right, span1"><strong>State:</strong></div>
-                                                                                <div class="text-left, span1" id="patientInfoState">Dummy</div>
+                                                                                <div class="text-left, span1" id="patientInfoState"></div>
                                                                                 <div class="text-right, span1"><strong>Zip:</strong></div>
-                                                                                <div class="text-left, span1" id="patientInfoZip">Dummy</div>
+                                                                                <div class="text-left, span1" id="patientInfoZip"></div>
                                                                             </div>
                                                                             
                                                                             <div class=", row-fluid">
                                                                                 <div class="text-right, span2"><strong>Phone Number:</strong></div>
-                                                                                <div class="text-left, span2" id="patientInfoPhNum">Dummy</div>                                                                                
+                                                                                <div class="text-left, span2" id="patientInfoPhNum"></div>                                                                                
                                                                             </div>
                                                                             
                                                                             <div class=", row-fluid">
                                                                                 <div class="text-right, span2"><strong>Insurance Company:</strong></div>
-                                                                                <div class="text-left, span2" id="patientInfoInsComp">Dummy</div>
+                                                                                <div class="text-left, span2" id="patientInfoInsComp"></div>
                                                                                 <div class="text-right, span2"><strong>Insurance ID:</strong></div>
-                                                                                <div class="text-left, span2" id="patientInfoInsID">Dummy</div>
+                                                                                <div class="text-left, span2" id="patientInfoInsID"></div>
                                                                             </div>
                                                                             
                                                                         </div>
                                                                         <!--Patient Metrics tab-->
                                                                         <div class="tab-pane" id="patientMetrics">
                                                                             <div style = "float: right;">
-                                                                                <button type="button" class = "btn btm-inverse" id = "newEmployeeMetrics">New Metrics</button>
+                                                                                <button type="button" class = "btn btn-inverse" id = "newEmployeeMetrics">New Metrics</button>
                                                                             </div>
-                                                                            <table id = "dataTableDoctorMetrics" class = "table table-striped table-hover ">
+                                                                            <table class = "table table-bordered table-striped table-hover ">
                                                                                 <thead>
                                                                                     <tr>
-                                                                                            <td>Input Date</td>
-                                                                                            <td>Weight</td>
-                                                                                            <td>Sugar Level</td>
-                                                                                            <td>Blood Pressure</td>
-                                                                                            <td>Prescription </td>
-                                                                                            <td>Observations</td>
-                                                                                            <td></td>
+                                                                                            <td><strong>Input Date</strong></td>
+                                                                                            <td><strong>Weight</strong></td>
+                                                                                            <td><strong>Sugar Level</strong></td>
+                                                                                            <td><strong>Blood Pressure</strong></td>
+                                                                                            <td><strong>Prescription</strong></td>
+                                                                                            <td><strong>Observation</strong></td>
                                                                                     </tr>
                                                                                 </thead>
                                                                                 <tbody id = "tableBodyDoctorMetrics">
@@ -204,19 +204,18 @@
 							<div class = "container">
                                                             <div class = "span11">
                                                                 <div style = "float: center;">
-                                                                    <button type="button" class = "btn btm-inverse" id = "newPatientMetrics">New Metrics</button>
+                                                                    <button type="button" class = "btn btn-inverse" id = "newPatientMetrics">New Metrics</button>
                                                                 </div>
-								<table id = "dataTablePatientMetrics" class = "table table-striped table-hover ">
+								<table id = "dataTablePatientMetrics" class = "table table-striped table-bordered table-hover ">
                                                                     <strong>
                                                                     <thead>
                                                                         <tr>
-                                                                                <td>Input Date</td>
-                                                                                <td>Weight</td>
-                                                                                <td>Sugar Level</td>
-                                                                                <td>Blood Pressure</td>
-                                                                                <td>Prescription </td>
-                                                                                <td>Observation</td>
-                                                                                <td></td>
+                                                                                <td><strong>Input Date</strong></td>
+                                                                                <td><strong>Weight</strong></td>
+                                                                                <td><strong>Sugar Level</strong></td>
+                                                                                <td><strong>Blood Pressure</strong></td>
+                                                                                <td><strong>Prescription</strong></td>
+                                                                                <td><strong>Observation</strong></td>
                                                                         </tr>
                                                                     </thead>
                                                                     </strong>
@@ -323,7 +322,7 @@
                     <label for="event">First Name:</label>
                     <input type="text" name="patientFormFirstName" id="patientFormFirstName" style="width: 400px; height: 30px; margin-top:10;"/>
                     <label for="event">Last Name:</label>
-                    <input type="text" name="patientFormLasttName" id="patientFormLasttName" style="width: 400px; height: 30px; margin-top:10;"/>
+                    <input type="text" name="patientFormLasttName" id="patientFormLastName" style="width: 400px; height: 30px; margin-top:10;"/>
                     <label for="event">Address:</label>
                     <input type="text" name="patientFormAddress" id="patientFormAddress" style="width: 400px; height: 30px; margin-top:10;"/>
                     <label for="event">City:</label>
@@ -331,7 +330,7 @@
                     <label for="event">State:</label>
                     <input type="text" name="patientFormState" id="patientFormState" style="width: 400px; height: 30px; margin-top:10;"/>
                     <label for="event">Zip:</label>
-                    <input type="text" name="patientFormZip" id="patientFormState" style="width: 400px; height: 30px; margin-top:10;"/>
+                    <input type="text" name="patientFormZip" id="patientFormZip" style="width: 400px; height: 30px; margin-top:10;"/>
                     <label for="event">Insured?</label>
                     <input type="checkbox" name="patientFormInsured" id="patientFormInsured" style="margin-top:10;"/>
                     <label for="event">Insurance Company:</label>

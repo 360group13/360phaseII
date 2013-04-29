@@ -1,7 +1,7 @@
 <?php
 
 require_once 'dbconnect.class.php';
-include 'Patient.class.php';
+include_once 'Patient.class.php';
 
 class Doctor extends Employee 
 {

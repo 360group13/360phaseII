@@ -1,6 +1,7 @@
 <?php
 
 require_once 'dbconnect.class.php';
+require_once 'User.class.php';
 
 class Employee extends User{
     protected $employeeID;
@@ -27,7 +28,7 @@ class Employee extends User{
     
     public function getPatients()
     {
-        $sql = mysql_query("SELECT Patients.username, first_name, last_name FROM patients, users WHERE (Patients.doctor_id = '$this->employeeID' OR Patients.nurse_id = '$this->employeeID') AND Users.username = Patients.username;");
+        $sql = mysql_query("SELECT Patients.username, first_name, last_name FROM patients, users WHERE (Patients.doctor_id = '$this->employeeID' OR Patients.nurse_id = '$this->employeeID') AND Users.username = Patients.username ORDER BY last_name ASC;");
         $patients = array();
         $i = 0;
         while($result = mysql_fetch_array($sql)){
